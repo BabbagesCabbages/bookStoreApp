@@ -72,3 +72,17 @@ $(document).ready(function(){
 	 
 });
 
+
+//test for button, was trying out code that posted object data 
+//to a table. Works outside of template but not inside template
+//when I call $(".add-to-cart") instead of $("#test-button").
+$("#test-button").on('click',function(){
+	var books=["book1","book2"];
+	var templ="<tr><td><%= value %></td></tr>";
+	var rows=_.map(books, function(item){
+	return _.template(templ, {value:item});
+	});
+		var html=rows.join("");
+		$("#my-table").empty().append(html);
+});
+
