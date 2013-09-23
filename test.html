@@ -1,64 +1,52 @@
 <!DOCTYPE html>
 <html>
 <head>
-	
-	<script type="x-template/my-template" id="author-template">	 <span><%= firstName %><%= lastName %></span>
-	</script>
-
-	
-	<script type="text/html" id="book-template">
-	<aside class="book">
-	<h3 class="book-title"> <%= title %></h3>
-	<aside class="book-cover">
-			 <img src="<%=image %>"></img>
-		</aside>
-	<ul class="book-authors">
-	By:
-	<% _.each(authors,function(author){ %>
-		<li><%= author.firstName%> <%=author.lastName%></li>
-		<% }) %>
-	</ul>
-	
-		<dl>
-		<dt>Publish date</dt>
-		<dd class="publish-date">
-			<span class="book-month"><%=numberToMonth(publishDate.month) %></span>
-			<span class="book-year"><%=publishDate.year %></span>
-			<dt>Rating</dt>
-			<dd class="book-rating"><%=rating%></dd>
-			<dt>Price</dt>
-			<dd class="book-price">$<%= price %></dd>
-		</dl>
-		<div class="add-to-cart">
-		<button>Add To Cart
-		</button>
+		<script type="text/html" id="book-template">
+		<div class="seperator"></div>
+		
+		<aside class="book-store">
+		<div>
+			<h3 class="book-title"> <%= title %></h3>
+			<div class="book-cover">
+			<img src="<%= image %>"></img>
+			<div class="book-authors">By:
+			<% _.each(authors,function(author){ %>
+				<li><%=author.firstName+ " " + author.lastName %></li>
+				<% }); %>
+			</div>
+			<dl>
+			<dt>Publish Date</dt>
+			<dd class="publish-date">
+			<ds class="book-month"><%=monthToString(publishDate.month)%></ds>
+			<ds class="book-year"><%=publishDate.year%></ds>
+			</dd>
+			<dd class="book-rating">Rating:
+			<span><%=rating%>
+			</span>
+			</dd>
+			<dd class="book-price">Price:
+			<span><%=price%>
+			</span>
+			</dd>
+			</dl>
+			<button class="add-to-cart">Add to Cart</button>
 		</div>
-	</aside>
-</script>
-<script type="text/html" id="cart-template">
-</script>
+		</aside>
+		</script>		
 </head>
 <body>
-		<div id="books-store">
-			<h1>Book Store</h1>
-			<h2>Available Books</h2>
-		
-		<aside class="book-info">
-			<header class="book-title"></header>	
-		</div>
-		<div id="shopping-cart">
-			<h2>Items Added:</h2>
-				<button id="test-button">test</button>
-		</div>
-		<table id="my-table">
-		</table>
-
-<!------------------------------------------------------- -->
+	<div id="books-store">
+		<h1>Books Available</h1>
+	</div>
+	<div id="shop-cart">
+		<h1>Items Added</h1>
+	</div>
 
 
-				<script src="underscore.js"></script>
-				<script src="book.js"></script>
-				<script src="jquery.js"></script>
-				<script src="test.js"></script>
-			</body>
-			</html>
+<script src="underscore.js"></script>
+<script src="jquery.js"></script>
+
+<script src="book.js"></script>
+<script src="testing.js"></script>
+</body>
+</hmtl>
