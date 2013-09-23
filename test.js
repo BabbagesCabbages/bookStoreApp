@@ -50,7 +50,7 @@ var renderBook=function(book){
 var SHOPPING_CART=[];
 var addToCart=function(shoppingCart,f){
 	var temp=SHOPPING_CART;
-	var result=f(temp);
+	var result=f();
 	SHOPPING_CART=temp;
 	return result;
 }
@@ -67,22 +67,17 @@ $(document).ready(function(){
 	_.each(allBooks(),function(book){
 		var $listBook=$(renderBook(book));
 		$bookStore.append($listBook);
-
 	})
-	 
-});
-
-
-//test for button, was trying out code that posted object data 
-//to a table. Works outside of template but not inside template
-//when I call $(".add-to-cart") instead of $("#test-button").
-$("#test-button").on('click',function(){
+	$(".book-store").on("click",".add-to-cart", function(){
 	var books=["book1","book2"];
 	var templ="<tr><td><%= value %></td></tr>";
 	var rows=_.map(books, function(item){
 	return _.template(templ, {value:item});
-	});
+		});
 		var html=rows.join("");
-		$("#my-table").empty().append(html);
-});
+		$("#shop-cart").append(html);
+		});
+
+	});
+
 
