@@ -1,0 +1,23 @@
+.gold-star{
+	color:gold;
+}
+
+.grey-star{
+	color:light-grey;
+}
+
+#shopping-cart td{
+	box-shadow: 50px;
+	box-shadow-color:black;
+	width:100%;
+	text-align: left;
+	font-size: 30px;
+}
+
+#shopping-cart tr{
+	box-shadow: 50px;
+	width:100%;
+	text-align: right;
+	font-size: 30px;
+}
+
