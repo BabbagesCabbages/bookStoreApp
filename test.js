@@ -47,6 +47,15 @@ var renderBook=function(book){
 	return bookTemplate(book);
 }
 
+var renderAuthor=function(author){
+	var authorTemplate = _.template(getTemplate("author-template"));
+	return authorTemplate(author);
+}
+
+var renderAuthors=function(authors){
+	return _.map(authors,renderAuthor).join(", ");
+}
+
 var SHOPPING_CART=[];
 var addToCart=function(shoppingCart,f){
 	var temp=SHOPPING_CART;
@@ -61,6 +70,36 @@ var addBook=function(book){
 	return SHOPPING_CART.push(book);
 }
 
+var renderRating=function(rating){
+	rating=Math.round(rating);
+
+	var starTemplate=_.template(getTemplate("star-template")),
+		blackStar={"star":htmlChar("blackStar"),
+					"starClass": "gold-star"},
+		whiteStar={"star":htmlChar("blackStar"),
+					"starClass": "grey-star"};
+	var blackStars= _.map(_.range(0,rating), function(){
+		return starTemplate(blackStar);
+	});
+	var whiteStars=_.map(_.range(0, 5-rating),function(){
+		return starTemplate(whiteStar);
+	});
+	return blackStars.concat(whiteStars).join("");
+};
+
+var HTML_CHARS={
+	"blackStar": "#9733",
+	"whiteStar": "#9734",
+	"heart":"hearts",
+	"dollarSign":"#36"
+};
+
+var htmlChar = function(name){
+	var code= HTML_CHARS[name];
+	if(code){
+		return "&" +code+ ":";
+	};
+};
 
 $(document).ready(function(){
 	var $bookStore=$("#books-store");
