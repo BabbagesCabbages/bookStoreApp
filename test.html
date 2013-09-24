@@ -1,17 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+	<link rel="stylesheet" type="text/css" href="styles.css">
+
 		<script type="text/html" id="star-template">
 		<span class="<%= starClass %>"><%=star%></span>
 		</script>
+
 		<script type="text/html" id="author-template">
 		<%=firstName+ " " + lastName %>
 		</script>
+
 		<script type="text/html" id="book-template">
 		<div class="seperator"></div>
 
 		<aside class="book-store">
-		<div>
+	
 			<h3 class="book-title"> <%= title %></h3>
 			<div class="book-cover">
 			<img src="<%= image %>"></img>
@@ -34,18 +39,47 @@
 			</span>
 			</dd>
 			</dl>
-			<button class="add-to-cart">Add to Cart</button>
-		</div>
+			<button data-id="<%=id%>">Add to Cart</button>
+		
 		</aside>
-		</script>		
+		</script>	
+		
+		<script type="text/html" id="total-price-template">
+			<tfoot>
+			<td></td>
+			<td></td>
+			<td><%=totalPrice%></td>
+			</tfoot>
+		</script>
+		<script type="text/html" id="line-item-template">
+		<tr>
+			<td><%=book.title%></td>
+			<td><%=book.price%></td>
+		<td>
+			<button data-id="<%=id%>">Remove</button>
+		</td>
+		</tr>
+		</script>
+		<script type="text/html" id="shopping-cart-template">
+		<table> 
+			<tbody>
+				<%= renderLineItems(items)%> 
+			</tbody>
+			<tfoot>
+			<%=renderTotalPrice(items)%>
+			</tfoot>
+		</table>
+		</script>
+			
 </head>
 <body>
 	<div id="books-store">
 		<h1>Books Available</h1>
 	</div>
-	<div id="shop-cart">
-		<h1>Items Added</h1>
-	</div>
+	<section id="shopping-cart">
+		<h1>Shopping Cart</h1>
+		
+	</section>
 
 
 <script src="underscore.js"></script>
