@@ -17,6 +17,9 @@ var findBook=function(pred){
 var findBooks=function(pred){
 	return _.filter(allBooks(), pred);
 }
+var findBookWhere=function(params){
+	return _.findWhere(allBooks(),params);
+}
 
 var findBooksWhere=function(params){
 	return _.where(allBooks(),params);
@@ -56,20 +59,6 @@ var renderAuthors=function(authors){
 	return _.map(authors,renderAuthor).join(", ");
 }
 
-var SHOPPING_CART=[];
-var addToCart=function(shoppingCart,f){
-	var temp=SHOPPING_CART;
-	var result=f();
-	SHOPPING_CART=temp;
-	return result;
-}
-
-var addBook=function(book){
-	var id=Date.now();
-	var book={"id":id,"book":book};
-	return SHOPPING_CART.push(book);
-}
-
 var renderRating=function(rating){
 	rating=Math.round(rating);
 
@@ -87,6 +76,16 @@ var renderRating=function(rating){
 	return blackStars.concat(whiteStars).join("");
 };
 
+var SHOPPING_CART=[];
+
+
+var addBookToCart=function(book){
+	var id=Date.now();
+	var item={"id":id,"book":book};
+	SHOPPING_CART.push(item);
+	refreshShoppingCart();
+};
+
 var HTML_CHARS={
 	"blackStar": "#9733",
 	"whiteStar": "#9734",
@@ -97,26 +96,56 @@ var HTML_CHARS={
 var htmlChar = function(name){
 	var code= HTML_CHARS[name];
 	if(code){
-		return "&" +code+ ":";
+		return "&" +code+ ";";
 	};
+};
+
+var handleAddToCart=function(e){
+	var $button=$(e.target),
+		data=$button.data(),
+		book=findBookWhere(data);
+
+		addBookToCart(book);
+		refreshShoppingCart();
+		console.log(SHOPPING_CART);
+		
+};
+
+var renderLineItems=function(items){
+	var lineItemTemplate= _.template(getTemplate("line-item-template"));
+	return _.map(items, lineItemTemplate).join("");
+}
+
+
+
+var renderShoppingCart=function(){
+	var shoppingCartTemplate=_.template(getTemplate("shopping-cart-template"));
+	return $(shoppingCartTemplate({"items":SHOPPING_CART}));	
+};
+
+var renderTotalPrice=function(items){
+	var totalPriceTemplate=_.template(getTemplate("total-price-template"));
+	var totalPrice= _.reduce(items, function(total,item){
+		return total+item.book.price;
+	},0);
+	return totalPriceTemplate({"totalPrice":totalPrice});
+};
+
+var refreshShoppingCart=function(shoppingCart){
+	var $shoppingCart=$("#shopping-cart");
+	$shoppingCart.empty();
+	$shoppingCart.append(renderShoppingCart());
 };
 
 $(document).ready(function(){
 	var $bookStore=$("#books-store");
-	_.each(allBooks(),function(book){
-		var $listBook=$(renderBook(book));
-		$bookStore.append($listBook);
-	})
-	$(".book-store").on("click",".add-to-cart", function(){
-	var books=["book1","book2"];
-	var templ="<tr><td><%= value %></td></tr>";
-	var rows=_.map(books, function(item){
-	return _.template(templ, {value:item});
-		});
-		var html=rows.join("");
-		$("#shop-cart").append(html);
-		});
 
+	_.each(allBooks(),function(book){
+		var $renderBook=$(renderBook(book));
+	$renderBook.find("button").on("click",handleAddToCart);
+	$bookStore.append($renderBook);
+	refreshShoppingCart();
 	});
+});
 
 
