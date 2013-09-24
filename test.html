@@ -1,27 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
+		<script type="text/html" id="star-template">
+		<span class="<%= starClass %>"><%=star%></span>
+		</script>
+		<script type="text/html" id="author-template">
+		<%=firstName+ " " + lastName %>
+		</script>
 		<script type="text/html" id="book-template">
 		<div class="seperator"></div>
-		
+
 		<aside class="book-store">
 		<div>
 			<h3 class="book-title"> <%= title %></h3>
 			<div class="book-cover">
 			<img src="<%= image %>"></img>
+
 			<div class="book-authors">By:
-			<% _.each(authors,function(author){ %>
-				<li><%=author.firstName+ " " + author.lastName %></li>
-				<% }); %>
+				<%=renderAuthors(authors)%>
 			</div>
 			<dl>
 			<dt>Publish Date</dt>
 			<dd class="publish-date">
-			<ds class="book-month"><%=monthToString(publishDate.month)%></ds>
+			<ds class="book-month"><%=numberToMonth(publishDate.month)%></ds>
 			<ds class="book-year"><%=publishDate.year%></ds>
 			</dd>
 			<dd class="book-rating">Rating:
-			<span><%=rating%>
+			<span><%= renderRating(rating) %>
 			</span>
 			</dd>
 			<dd class="book-price">Price:
@@ -47,6 +52,6 @@
 <script src="jquery.js"></script>
 
 <script src="book.js"></script>
-<script src="testing.js"></script>
+<script src="test.js"></script>
 </body>
 </hmtl>
