@@ -63,11 +63,16 @@
 		<script type="text/html" id="shopping-cart-template">
 		<table> 
 			<tbody>
+			<td>
 				<%= renderLineItems(items)%> 
+				</td>
 			</tbody>
 			<tfoot>
+			<tr>
+			Total Price:
 			<%=renderTotalPrice(items)%>
 			</tfoot>
+			</tr>
 		</table>
 		</script>
 			
